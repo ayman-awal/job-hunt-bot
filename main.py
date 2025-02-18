@@ -35,7 +35,7 @@ keywords = ["entry level", "junior", "level I", "software engineer"]
 
 jobData = []
 for start in range(1, 101, 10): 
-    url = f"https://www.googleapis.com/customsearch/v1?q={query}&key={google_search_api_key}&cx={cse_id}"
+    url = f"https://www.googleapis.com/customsearch/v1?q={query}&key={google_search_api_key}&cx={cse_id}&start={start}"
     response = requests.get(url)
     # print(response)
     data = response.json()

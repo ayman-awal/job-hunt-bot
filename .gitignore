@@ -1,2 +1,6 @@
 .env
-env
+venv
+.filtered_jobs.txt
+*.log
+db.sqlite3
+__pycache__/
