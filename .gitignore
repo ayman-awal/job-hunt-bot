@@ -1,6 +1,5 @@
 .env
 venv
-.filtered_jobs.txt
-*.log
+filtered_jobs.txt
 db.sqlite3
 __pycache__/
