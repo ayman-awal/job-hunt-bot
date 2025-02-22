@@ -22,6 +22,7 @@ db.init_app(app)
 jwt = JWTManager(app)
 
 with app.app_context():
+    db.drop_all()  # Drop all tables
     db.create_all()
 
 
@@ -32,13 +33,21 @@ def register():
     name = data.get('name')
     email = data.get('email')
     password = data.get('password')
+    roles = data.get('roles')
+    experienceLevel = data.get('experienceLevel')
+    skills = data.get('skills')
+    keywordsToAvoid = data.get('keywordsToAvoid')
 
     if User.query.filter_by(email=email).first():
         return jsonify({"message": "Email already exists"}), 400
 
     new_user = User(
         name=name,
-        email=email
+        email=email,
+        roles=roles,
+        experienceLevel=experienceLevel,
+        skills=skills,
+        keywordsToAvoid=keywordsToAvoid
     )
     new_user.set_password(password)
 
@@ -64,6 +73,7 @@ def login():
             return jsonify({"access_token": access_token}), 200
         else:
             return jsonify({"message": "Wrong password"}), 400
+
 
 
 if __name__ == '__main__':

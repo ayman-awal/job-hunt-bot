@@ -30,8 +30,11 @@ from_email = os.getenv("FROM_EMAIL")
 to_email = os.getenv("TO_EMAIL")
 
 
-query = 'Software Engineer "United States" site:boards.greenhouse.io'
+query = 'Software Engineer "United States" site:greenhouse.io'
+experience = ["New grad", "Entry Level", "Junior"]
+roles = ["Software Engineer", "Software Development Engineer", "Backend Engineer", "Backend Developer", "Full Stack Developer"]
 keywords = ["entry level", "junior", "level I", "software engineer"]
+# skills = []
 
 jobData = []
 for start in range(1, 101, 10): 
@@ -60,13 +63,16 @@ for data in jobData:
         title = soup.find("title").text if soup.find("title") else "N/A"
 
         meta_tags = {meta.get("property", ""): meta.get("content", "") for meta in soup.find_all("meta")}
-        # print(meta_tags)
+        print(meta_tags)
 
         url = meta_tags['og:url']
 
         print(url)
 
         domain = get_domain(url)
+
+        # if domain == "lever.co":
+
         
         company_logo = get_company_logo(domain)
 
