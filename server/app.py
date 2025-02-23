@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from models import db
 from models.User import User
 from flask import Flask, jsonify, request
-from flask_jwt_extended import JWTManager, create_access_token #, jwt_required, get_jwt_identity
+from flask_jwt_extended import JWTManager, create_access_token
 import pymysql
 from datetime import timedelta
 pymysql.install_as_MySQLdb()
@@ -22,7 +22,6 @@ db.init_app(app)
 jwt = JWTManager(app)
 
 with app.app_context():
-    db.drop_all()  # Drop all tables
     db.create_all()
 
 
@@ -74,6 +73,27 @@ def login():
         else:
             return jsonify({"message": "Wrong password"}), 400
 
+@app.route('/users', methods=['GET'])
+def get_users_data():
+    users = User.query.all()
+
+    if not users:
+        return jsonify({"message": "No users found"}), 400
+    
+    user_list = [
+        {
+            "id": user.id,
+            "name": user.name,
+            "email": user.email,
+            "roles": user.roles,
+            "experienceLevel": user.experienceLevel,
+            "skills": user.skills,
+            "keywordsToAvoid": user.keywordsToAvoid
+        }
+        for user in users
+    ]
+    
+    return jsonify(user_list), 200
 
 
 if __name__ == '__main__':
